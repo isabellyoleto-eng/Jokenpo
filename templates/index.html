@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jokenpô</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- ============================= -->
+<!-- TELA INICIAL -->
+<!-- ============================= -->
+
+<div id="telaInicial" class="tela-inicial">
+
+    <div class="logo-jogo">
+        🎮
+    </div>
+
+    <h1>
+        JOKENPÔ
+    </h1>
+
+    <p>
+        Prepare-se para o desafio!
+    </p>
+
+
+    <div class="nome-area">
+
+        <label for="nomeJogador">
+            👤 Qual é o seu nome?
+        </label>
+
+        <input
+            type="text"
+            id="nomeJogador"
+            placeholder="Digite seu nome"
+            maxlength="20"
+        >
+
+    </div>
+
+
+    <button
+        class="botao-iniciar"
+        onclick="iniciarJogo()"
+    >
+
+        🚀 COMEÇAR JOGO
+
+    </button>
+
+</div>
+
+
+
+<!-- ============================= -->
+<!-- JOGO -->
+<!-- ============================= -->
+
+<div class="game">
+
+
+    <!-- CABEÇALHO -->
+
+    <div class="cabecalho">
+
+        <div class="badge">
+            🎮 JOGO ONLINE
+        </div>
+
+        <h1>
+            JOKENPÔ
+        </h1>
+
+        <p>
+            Pedra, Papel ou Tesoura?
+        </p>
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- PLACAR -->
+    <!-- ============================= -->
+
+    <div class="score">
+
+
+        <div class="score-box">
+
+            <span id="nomeExibido">
+                VOCÊ
+            </span>
+
+            <strong id="placarJogador">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="versus">
+            VS
+        </div>
+
+
+        <div class="score-box computador">
+
+            <span>
+                COMPUTADOR
+            </span>
+
+            <strong id="placarComputador">
+                0
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ============================= -->
+    <!-- CONTEÚDO DO JOGO -->
+    <!-- ============================= -->
+
+    <div class="conteudo-jogo">
+
+
+        <!-- ARENA -->
+
+        <div class="arena">
+
+
+            <div
+                class="mensagem"
+                id="mensagem"
+            >
+
+                Faça sua escolha!
+
+            </div>
+
+
+
+            <!-- ESCOLHAS -->
+
+            <div class="escolhas">
+
+
+                <button
+                    class="escolha"
+                    onclick="jogar('pedra')"
+                >
+
+                    <span class="emoji">
+                        🪨
+                    </span>
+
+                    <span>
+                        Pedra
+                    </span>
+
+                </button>
+
+
+
+                <button
+                    class="escolha"
+                    onclick="jogar('papel')"
+                >
+
+                    <span class="emoji">
+                        📄
+                    </span>
+
+                    <span>
+                        Papel
+                    </span>
+
+                </button>
+
+
+
+                <button
+                    class="escolha"
+                    onclick="jogar('tesoura')"
+                >
+
+                    <span class="emoji">
+                        ✂️
+                    </span>
+
+                    <span>
+                        Tesoura
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- RESULTADO -->
+
+            <div class="resultado-area">
+
+
+                <div id="escolhaJogador">
+                    👤 —
+                </div>
+
+
+                <div class="resultado-vs">
+                    VS
+                </div>
+
+
+                <div id="escolhaComputador">
+                    🤖 —
+                </div>
+
+
+            </div>
+
+
+
+            <!-- REINICIAR -->
+
+            <button
+                class="botao-reset"
+                onclick="reiniciar()"
+            >
+
+                🔄 REINICIAR
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- ============================= -->
+        <!-- HISTÓRICO -->
+        <!-- ============================= -->
+
+        <aside class="historico">
+
+
+            <h3>
+                📜 HISTÓRICO
+            </h3>
+
+
+            <div id="listaHistorico">
+
+                <p class="historico-vazio">
+                    Nenhuma rodada ainda...
+                </p>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ============================= -->
+<!-- TELA FINAL -->
+<!-- ============================= -->
+
+<div
+    id="telaFinal"
+    class="tela-final"
+>
+
+
+    <div class="trofeu">
+        🏆
+    </div>
+
+
+    <h2 id="tituloFinal">
+        VOCÊ VENCEU!
+    </h2>
+
+
+    <p id="subtituloFinal">
+        Parabéns! Você ganhou a partida!
+    </p>
+
+
+    <div class="confetes">
+        🎉 🎊 🎉 🎊 🎉
+    </div>
+
+
+    <button
+        onclick="reiniciar()"
+        class="botao-final"
+    >
+
+        🔄 JOGAR NOVAMENTE
+
+    </button>
+
+
+</div>
+
+
+
+<script>
+
+
+// =====================================
+// SISTEMA DE SONS
+// =====================================
+
+let audioContext = null;
+
+
+function prepararAudio() {
+
+    if (!audioContext) {
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+
+    if (audioContext.state === "suspended") {
+
+        audioContext.resume();
+
+    }
+
+}
+
+
+
+// =====================================
+// TOCAR SOM
+// =====================================
+
+function tocarSom(tipo) {
+
+
+    prepararAudio();
+
+
+    const oscilador =
+        audioContext.createOscillator();
+
+
+    const volume =
+        audioContext.createGain();
+
+
+    oscilador.connect(volume);
+
+    volume.connect(
+        audioContext.destination
+    );
+
+
+    // CLIQUE
+
+    if (tipo === "clique") {
+
+        oscilador.frequency.value = 500;
+
+        volume.gain.value = 0.08;
+
+        oscilador.start();
+
+        oscilador.stop(
+            audioContext.currentTime + 0.08
+        );
+
+    }
+
+
+    // EMPATE
+
+    else if (tipo === "empate") {
+
+        oscilador.frequency.value = 350;
+
+        volume.gain.value = 0.10;
+
+        oscilador.start();
+
+        oscilador.stop(
+            audioContext.currentTime + 0.20
+        );
+
+    }
+
+
+    // VITÓRIA
+
+    else if (tipo === "vitoria") {
+
+        oscilador.frequency.value = 700;
+
+        volume.gain.value = 0.12;
+
+        oscilador.start();
+
+        oscilador.stop(
+            audioContext.currentTime + 0.40
+        );
+
+    }
+
+
+    // DERROTA
+
+    else if (tipo === "derrota") {
+
+        oscilador.frequency.value = 180;
+
+        volume.gain.value = 0.12;
+
+        oscilador.start();
+
+        oscilador.stop(
+            audioContext.currentTime + 0.50
+        );
+
+    }
+
+}
+
+
+
+// =====================================
+// VARIÁVEIS
+// =====================================
+
+let nomeJogador = "";
+
+let placarJogador = 0;
+
+let placarComputador = 0;
+
+let jogando = false;
+
+
+
+// =====================================
+// EMOJIS
+// =====================================
+
+const emojis = {
+
+    pedra: "🪨",
+
+    papel: "📄",
+
+    tesoura: "✂️"
+
+};
+
+
+
+// =====================================
+// INICIAR JOGO
+// =====================================
+
+function iniciarJogo() {
+
+
+    prepararAudio();
+
+
+    const nome =
+        document
+        .getElementById("nomeJogador")
+        .value
+        .trim();
+
+
+    if (nome === "") {
+
+        alert(
+            "Digite seu nome para começar!"
+        );
+
+        return;
+
+    }
+
+
+    nomeJogador = nome;
+
+
+    document
+        .getElementById("nomeExibido")
+        .textContent =
+        nomeJogador.toUpperCase();
+
+
+    document
+        .getElementById("telaInicial")
+        .style.display = "none";
+
+
+    document
+        .querySelector(".game")
+        .style.display = "block";
+
+}
+
+
+
+// =====================================
+// JOGAR
+// =====================================
+
+async function jogar(escolha) {
+
+
+    if (jogando) {
+
+        return;
+
+    }
+
+
+    tocarSom("clique");
+
+
+    jogando = true;
+
+
+    const mensagem =
+        document.getElementById(
+            "mensagem"
+        );
+
+
+
+    // =================================
+    // CONTAGEM
+    // =================================
+
+    mensagem.textContent = "3...";
+
+    await esperar(700);
+
+
+    mensagem.textContent = "2...";
+
+    await esperar(700);
+
+
+    mensagem.textContent = "1...";
+
+    await esperar(700);
+
+
+    mensagem.textContent =
+        "🎮 JÁ!";
+
+
+
+    // =================================
+    // ENVIA PARA O FLASK
+    // =================================
+
+    const resposta =
+        await fetch(
+            "/jogar",
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    escolha: escolha
+
+                })
+
+            }
+        );
+
+
+
+    const resultado =
+        await resposta.json();
+
+
+
+    // =================================
+    // MOSTRA ESCOLHAS
+    // =================================
+
+    document
+        .getElementById(
+            "escolhaJogador"
+        )
+        .textContent =
+        "👤 " +
+        emojis[resultado.jogador];
+
+
+    document
+        .getElementById(
+            "escolhaComputador"
+        )
+        .textContent =
+        "🤖 " +
+        emojis[resultado.computador];
+
+        const jogadorElemento =
+    document.getElementById("escolhaJogador");
+
+        const computadorElemento =
+    document.getElementById("escolhaComputador");
+
+    jogadorElemento.classList.remove("animar-escolha");
+    computadorElemento.classList.remove("animar-escolha");
+
+        void jogadorElemento.offsetWidth;
+        void computadorElemento.offsetWidth;
+
+    jogadorElemento.classList.add("animar-escolha");
+    computadorElemento.classList.add("animar-escolha");
+
+
+
+
+    // =================================
+    // MOSTRA RESULTADO
+    // =================================
+
+    mensagem.textContent =
+        resultado.resultado;
+
+
+
+    // =================================
+    // ATUALIZA PLACAR + SONS
+    // =================================
+
+    if (
+        resultado.resultado ===
+        "Você ganhou!"
+    ) {
+
+
+        placarJogador++;
+
+
+        tocarSom("vitoria");
+
+    }
+
+
+    else if (
+        resultado.resultado ===
+        "Computador ganhou!"
+    ) {
+
+
+        placarComputador++;
+
+
+        tocarSom("derrota");
+
+    }
+
+
+    else if (
+        resultado.resultado ===
+        "Empate!"
+    ) {
+
+
+        tocarSom("empate");
+
+    }
+
+
+
+    // =================================
+    // ATUALIZA PLACAR NA TELA
+    // =================================
+
+    document
+        .getElementById(
+            "placarJogador"
+        )
+        .textContent =
+        placarJogador;
+
+
+    document
+        .getElementById(
+            "placarComputador"
+        )
+        .textContent =
+        placarComputador;
+
+
+
+    // =================================
+    // ADICIONA AO HISTÓRICO
+    // =================================
+
+    adicionarHistorico(
+        resultado
+    );
+
+
+
+    // =================================
+    // FINAL DA PARTIDA
+    // =================================
+
+    if (
+        placarJogador === 5
+    ) {
+
+
+        mensagem.textContent =
+            "🏆 VOCÊ É O CAMPEÃO! 🎉";
+
+
+        mostrarTelaFinal(
+            true
+        );
+
+    }
+
+
+    else if (
+        placarComputador === 5
+    ) {
+
+
+        mensagem.textContent =
+            "🤖 O COMPUTADOR VENCEU!";
+
+
+        mostrarTelaFinal(
+            false
+        );
+
+    }
+
+
+    else {
+
+
+        jogando = false;
+
+    }
+
+}
+
+
+
+// =====================================
+// ADICIONAR HISTÓRICO
+// =====================================
+
+function adicionarHistorico(
+    resultado
+) {
+
+
+    const listaHistorico =
+        document.getElementById(
+            "listaHistorico"
+        );
+
+
+    const vazio =
+        listaHistorico.querySelector(
+            ".historico-vazio"
+        );
+
+
+    if (vazio) {
+
+        vazio.remove();
+
+    }
+
+
+
+    const rodada =
+        document.createElement(
+            "div"
+        );
+
+
+    rodada.className =
+        "rodada";
+
+
+
+    rodada.innerHTML = `
+
+        <div class="rodada-escolhas">
+
+            ${emojis[resultado.jogador]}
+
+            ${nomeJogador}
+
+            <span>VS</span>
+
+            ${emojis[resultado.computador]}
+
+            Computador
+
+        </div>
+
+
+        <div class="resultado">
+
+            ${resultado.resultado}
+
+        </div>
+
+    `;
+
+
+
+    listaHistorico.prepend(
+        rodada
+    );
+
+}
+
+
+
+// =====================================
+// TELA FINAL
+// =====================================
+
+function mostrarTelaFinal(
+    jogadorVenceu
+) {
+
+
+    const tela =
+        document.getElementById(
+            "telaFinal"
+        );
+
+
+    const titulo =
+        document.getElementById(
+            "tituloFinal"
+        );
+
+
+    const subtitulo =
+        document.getElementById(
+            "subtituloFinal"
+        );
+
+
+
+    if (jogadorVenceu) {
+
+
+        titulo.textContent =
+            "🏆 VOCÊ VENCEU!";
+
+
+        subtitulo.textContent =
+            "Parabéns! " +
+            nomeJogador +
+            ", você foi o campeão! 🎉";
+
+    }
+
+
+    else {
+
+
+        titulo.textContent =
+            "🤖 COMPUTADOR VENCEU!";
+
+
+        subtitulo.textContent =
+            "Foi por pouco! Tente novamente. 💪";
+
+    }
+
+
+    tela.classList.add(
+        "ativa"
+    );
+
+}
+
+
+
+// =====================================
+// REINICIAR
+// =====================================
+
+function reiniciar() {
+
+
+    document
+        .getElementById(
+            "telaFinal"
+        )
+        .classList.remove(
+            "ativa"
+        );
+
+
+    placarJogador = 0;
+
+    placarComputador = 0;
+
+
+    document
+        .getElementById(
+            "placarJogador"
+        )
+        .textContent = "0";
+
+
+    document
+        .getElementById(
+            "placarComputador"
+        )
+        .textContent = "0";
+
+
+    document
+        .getElementById(
+            "mensagem"
+        )
+        .textContent =
+        "Faça sua escolha!";
+
+
+    document
+        .getElementById(
+            "escolhaJogador"
+        )
+        .textContent =
+        "👤 —";
+
+
+    document
+        .getElementById(
+            "escolhaComputador"
+        )
+        .textContent =
+        "🤖 —";
+
+
+    document
+        .getElementById(
+            "listaHistorico"
+        )
+        .innerHTML = `
+
+            <p class="historico-vazio">
+                Nenhuma rodada ainda...
+            </p>
+
+        `;
+
+
+    jogando = false;
+
+
+    document
+        .querySelector(".game")
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "telaInicial"
+        )
+        .style.display = "flex";
+
+
+    document
+        .getElementById(
+            "nomeJogador"
+        )
+        .value = "";
+
+}
+
+
+
+// =====================================
+// ESPERAR
+// =====================================
+
+function esperar(tempo) {
+
+
+    return new Promise(
+
+        resolve => {
+
+            setTimeout(
+                resolve,
+                tempo
+            );
+
+        }
+
+    );
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

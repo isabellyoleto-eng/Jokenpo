@@ -1,0 +1,1145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+            circle at top left,
+            #7c3aed,
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at bottom right,
+            #ec4899,
+            transparent 35%
+        ),
+
+        #09090f;
+
+    color: white;
+
+    overflow-x: hidden;
+
+}
+
+
+
+/* ================================= */
+/* TELA INICIAL */
+/* ================================= */
+
+.tela-inicial {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+
+        radial-gradient(
+            circle at top left,
+            #7c3aed,
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at bottom right,
+            #ec4899,
+            transparent 35%
+        ),
+
+        #09090f;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px;
+
+}
+
+
+.logo-jogo {
+
+    font-size: 90px;
+
+    animation:
+        trofeuPulando
+        1.2s infinite;
+
+}
+
+
+.tela-inicial h1 {
+
+    margin-top: 10px;
+
+    font-size: 60px;
+
+    letter-spacing: 6px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #c084fc,
+            #f472b6
+        );
+
+    -webkit-background-clip: text;
+
+    color: transparent;
+
+}
+
+
+.tela-inicial p {
+
+    margin-top: 5px;
+
+    color: #aaa;
+
+    font-size: 18px;
+
+}
+
+
+.nome-area {
+
+    display: flex;
+
+    flex-direction: column;
+
+    width: 100%;
+
+    max-width: 350px;
+
+    margin-top: 35px;
+
+    gap: 10px;
+
+}
+
+
+.nome-area label {
+
+    color: #ddd;
+
+    font-size: 15px;
+
+}
+
+
+.nome-area input {
+
+    padding: 16px 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+    border-radius: 15px;
+
+    outline: none;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color: white;
+
+    text-align: center;
+
+    font-size: 16px;
+
+}
+
+
+.nome-area input:focus {
+
+    border-color: #c084fc;
+
+    box-shadow:
+        0 0 20px
+        rgba(192,132,252,0.25);
+
+}
+
+
+.nome-area input::placeholder {
+
+    color: #888;
+
+}
+
+
+.botao-iniciar {
+
+    margin-top: 25px;
+
+    padding: 16px 40px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #8b5cf6,
+            #ec4899
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+}
+
+
+.botao-iniciar:hover {
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 10px 35px
+        rgba(236,72,153,0.4);
+
+}
+
+
+
+/* ================================= */
+/* JOGO */
+/* ================================= */
+
+.game {
+
+    display: none;
+
+    min-height: 100vh;
+
+    padding: 40px 30px;
+
+}
+
+
+
+/* ================================= */
+/* CABEÇALHO */
+/* ================================= */
+
+.cabecalho {
+
+    text-align: center;
+
+}
+
+
+.badge {
+
+    display: inline-block;
+
+    padding: 8px 16px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color: #c084fc;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+.cabecalho h1 {
+
+    margin-top: 15px;
+
+    font-size: 55px;
+
+    letter-spacing: 5px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #c084fc,
+            #f472b6,
+            #facc15
+        );
+
+    -webkit-background-clip: text;
+
+    color: transparent;
+
+}
+
+
+.cabecalho p {
+
+    margin-top: 5px;
+
+    color: #aaa;
+
+}
+
+
+
+/* ================================= */
+/* PLACAR */
+/* ================================= */
+
+.score {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 25px;
+
+    margin-top: 35px;
+
+}
+
+
+.score-box {
+
+    width: 170px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.1);
+
+    text-align: center;
+
+}
+
+
+.score-box span {
+
+    display: block;
+
+    color: #bbb;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+.score-box strong {
+
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 45px;
+
+    color: #c084fc;
+
+}
+
+
+.versus {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: #777;
+
+}
+
+
+
+/* ================================= */
+/* CONTEÚDO */
+/* ================================= */
+
+.conteudo-jogo {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 40px;
+
+    max-width: 1200px;
+
+    margin: 40px auto;
+
+}
+
+
+
+/* ================================= */
+/* ARENA */
+/* ================================= */
+
+.arena {
+
+    width: 600px;
+
+    padding: 35px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.1);
+
+    backdrop-filter: blur(15px);
+
+    text-align: center;
+
+}
+
+
+.mensagem {
+
+    min-height: 30px;
+
+    margin-bottom: 30px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: #f472b6;
+
+}
+
+
+
+/* ================================= */
+/* BOTÕES */
+/* ================================= */
+
+.escolhas {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+}
+
+
+.escolha {
+
+    width: 140px;
+
+    height: 140px;
+
+    border: none;
+
+    border-radius: 25px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.escolha:hover {
+
+    transform:
+        translateY(-8px)
+        scale(1.05);
+
+    background:
+        rgba(192,132,252,0.2);
+
+    box-shadow:
+        0 10px 30px
+        rgba(192,132,252,0.2);
+
+}
+
+
+.escolha:active {
+
+    transform: scale(0.95);
+
+}
+
+
+.emoji {
+
+    font-size: 45px;
+
+}
+
+
+.escolha span:last-child {
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+}
+
+
+
+/* ================================= */
+/* RESULTADO */
+/* ================================= */
+
+.resultado-area {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 25px;
+
+    margin-top: 35px;
+
+    font-size: 25px;
+
+}
+
+
+.resultado-vs {
+
+    font-size: 14px;
+
+    color: #777;
+
+    font-weight: bold;
+
+}
+
+
+
+/* ================================= */
+/* BOTÃO RESET */
+/* ================================= */
+
+.botao-reset {
+
+    margin-top: 30px;
+
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color: #ddd;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+
+}
+
+
+.botao-reset:hover {
+
+    background:
+        rgba(236,72,153,0.2);
+
+    transform: scale(1.05);
+
+}
+
+
+
+/* ================================= */
+/* HISTÓRICO LATERAL */
+/* ================================= */
+
+.historico {
+
+    position: relative;
+
+    width: 280px;
+
+    max-height: 450px;
+
+    padding: 20px;
+
+    border-radius: 25px;
+
+    background:
+        rgba(20,20,35,0.92);
+
+    border:
+        1px solid
+        rgba(192,132,252,0.25);
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,0.35);
+
+}
+
+
+.historico h3 {
+
+    margin-bottom: 15px;
+
+    color: #c084fc;
+
+    text-align: center;
+
+}
+
+
+#listaHistorico {
+
+    max-height: 350px;
+
+    overflow-y: auto;
+
+}
+
+
+.historico-vazio {
+
+    color: #888;
+
+    text-align: center;
+
+    font-size: 14px;
+
+}
+
+
+.rodada {
+
+    padding: 12px;
+
+    margin-top: 10px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    color: #ddd;
+
+    text-align: center;
+
+}
+
+
+.rodada-escolhas {
+
+    font-size: 13px;
+
+}
+
+
+.rodada-escolhas span {
+
+    margin: 0 5px;
+
+    color: #777;
+
+}
+
+
+.rodada .resultado {
+
+    margin-top: 6px;
+
+    color: #c084fc;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+}
+
+
+
+/* ================================= */
+/* TELA FINAL */
+/* ================================= */
+
+.tela-final {
+
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        rgba(5,5,15,0.96);
+
+    backdrop-filter: blur(15px);
+
+    z-index: 10000;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: scale(1.1);
+
+    transition: 0.4s ease;
+
+}
+
+
+.tela-final.ativa {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: scale(1);
+
+}
+
+
+.trofeu {
+
+    font-size: 110px;
+
+    animation:
+        trofeuPulando
+        1s infinite;
+
+}
+
+
+.tela-final h2 {
+
+    margin-top: 20px;
+
+    font-size: 48px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #c084fc,
+            #f472b6,
+            #facc15
+        );
+
+    -webkit-background-clip: text;
+
+    color: transparent;
+
+}
+
+
+.tela-final p {
+
+    margin-top: 10px;
+
+    color: #bbb;
+
+    font-size: 18px;
+
+    text-align: center;
+
+}
+
+
+.confetes {
+
+    margin: 25px 0;
+
+    font-size: 35px;
+
+    animation:
+        confete
+        1s infinite alternate;
+
+}
+
+
+.botao-final {
+
+    padding: 16px 35px;
+
+    border: none;
+
+    border-radius: 50px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #8b5cf6,
+            #ec4899
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.botao-final:hover {
+
+    transform: scale(1.08);
+
+}
+
+
+
+/* ================================= */
+/* ANIMAÇÕES */
+/* ================================= */
+
+@keyframes trofeuPulando {
+
+    0%, 100% {
+
+        transform:
+            translateY(0)
+            rotate(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-20px)
+            rotate(5deg);
+
+    }
+
+}
+
+
+@keyframes confete {
+
+    from {
+
+        transform: scale(1);
+
+    }
+
+    to {
+
+        transform: scale(1.15);
+
+    }
+
+}
+
+
+
+/* ================================= */
+/* CELULAR */
+/* ================================= */
+
+@media (max-width: 900px) {
+
+
+    .conteudo-jogo {
+
+        flex-direction: column;
+
+    }
+
+
+    .historico {
+
+        width: 100%;
+
+        max-width: 600px;
+
+    }
+
+
+    .arena {
+
+        width: 100%;
+
+        max-width: 600px;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+
+    .game {
+
+        padding: 25px 15px;
+
+    }
+
+
+    .cabecalho h1 {
+
+        font-size: 40px;
+
+    }
+
+
+    .score-box {
+
+        width: 130px;
+
+    }
+
+
+    .escolhas {
+
+        gap: 10px;
+
+    }
+
+
+    .escolha {
+
+        width: 95px;
+
+        height: 110px;
+
+    }
+
+
+    .emoji {
+
+        font-size: 35px;
+
+    }
+
+
+    .arena {
+
+        padding: 25px 15px;
+
+    }
+
+}
+
+/* ================================= */
+/* HISTÓRICO FIXO NA LATERAL */
+/* ================================= */
+
+.historico {
+    position: fixed !important;
+
+    top: 50% !important;
+    right: 25px !important;
+
+    transform: translateY(-50%) !important;
+
+    width: 280px !important;
+    max-height: 450px !important;
+
+    padding: 20px !important;
+
+    margin: 0 !important;
+
+    background: rgba(20, 20, 35, 0.95) !important;
+
+    border: 1px solid rgba(192, 132, 252, 0.25) !important;
+
+    border-radius: 20px !important;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.35) !important;
+
+    overflow-y: auto !important;
+
+    z-index: 100 !important;
+}
+
+
+/* Título */
+
+.historico h3 {
+    text-align: center !important;
+
+    margin:
+        0 0 15px 0 !important;
+
+    color: #c084fc !important;
+}
+
+
+/* Lista */
+
+#listaHistorico {
+    max-height: 350px !important;
+
+    overflow-y: auto !important;
+}
+
+
+/* Cada rodada */
+
+.rodada {
+    margin-bottom: 10px !important;
+
+    padding: 12px !important;
+
+    border-radius: 12px !important;
+
+    background:
+        rgba(255, 255, 255, 0.06) !important;
+
+    text-align: center !important;
+}
+
+
+/* Resultado */
+
+.rodada .resultado {
+    margin-top: 5px !important;
+
+    font-weight: bold !important;
+
+    color: #c084fc !important;
+}
+
+
+/* ================================= */
+/* TELAS MENORES */
+/* ================================= */
+
+@media (max-width: 1100px) {
+
+    .historico {
+        position: relative !important;
+
+        top: auto !important;
+        right: auto !important;
+
+        transform: none !important;
+
+        width: 100% !important;
+
+        max-width: 600px !important;
+
+        margin: 25px auto !important;
+    }
+
+}
+/* ============================= */
+/* ANIMAÇÃO POP DAS ESCOLHAS */
+/* ============================= */
+
+#escolhaJogador,
+#escolhaComputador {
+    font-size: 40px;
+}
+
+.animar-escolha {
+    animation: popEscolha 0.8s ease-out;
+}
+
+@keyframes popEscolha {
+
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    40% {
+        transform: scale(1.4) rotate(-8deg);
+        opacity: 1;
+    }
+
+    65% {
+        transform: scale(0.9) rotate(5deg);
+    }
+
+    85% {
+        transform: scale(1.15) rotate(-2deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+    }
+
+}
